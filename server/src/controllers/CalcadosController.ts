@@ -96,3 +96,33 @@ export const updateShoes = async(req: Request , res: Response) =>
     }
 }
 
+export const deleteShoes = async(req: Request , res: Response) => 
+{
+    try
+    {
+        const { id } = req.params;
+        const{nome_produto,cor,marca,tamanho,preco,quantidade_em_estoque} = req.body;
+
+        const calcadoDeletado = await prisma.calcado.delete({
+            where:
+            {
+                id: Number(id)
+            },
+        })
+        return res.status(200).json({
+            message: "calçado excluido com sucesso",
+            calcadoDeletado
+        })
+    }
+
+    catch(error)
+    {
+        return res.status(500).json({
+            message: "operação de exclusão mal sucedida",
+            error
+        })
+    }
+
+    
+}
+
