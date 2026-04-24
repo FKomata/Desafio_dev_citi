@@ -30,7 +30,7 @@ export const createShoes = async (req: Request, res: Response) =>
             Message: "calçado criado com sucesso"
         })
     }
-    catch
+    catch(error)
     {
         return res.status(400).json({
             Message: "usuáio inválido",
@@ -40,7 +40,7 @@ export const createShoes = async (req: Request, res: Response) =>
 
 }
 
-export const readShoes = async (req: Request , res: Response) =>
+export const readAllShoes = async (req: Request , res: Response) =>
 {
     try
     {
@@ -54,10 +54,45 @@ export const readShoes = async (req: Request , res: Response) =>
 
         return res.status(200).json(shoes)
     }
-    catch
+    catch(error)
     {
         return res.status(400).json({
-            Message: "nenhum calçado cadastrado"
+            Message: "nenhum calçado cadastrado",
+            error
         })
     }
 }
+
+export const updateShoes = async(req: Request , res: Response) =>
+{
+    try
+    {
+        const { id } = req.params;
+        const {nome_produto,cor,marca,tamanho,preco,quantidade_em_estoque} = req.body;
+
+        const calcadotualizado = await prisma.calcado.update({
+            where:
+            {
+                id: Number(id)
+            },
+            data:{
+                nome_produto,
+                cor,
+                marca,
+                tamanho,
+                preco,
+                quantidade_em_estoque
+            }
+        })
+        
+        return res.status(200).json(calcadotualizado)
+    }
+    catch(error)
+    {
+        return res.status(500).json({
+            message: "Não foi possivel atualizar o produto",
+            error
+        })
+    }
+}
+
