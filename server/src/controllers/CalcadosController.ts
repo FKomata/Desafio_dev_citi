@@ -39,3 +39,25 @@ export const createShoes = async (req: Request, res: Response) =>
     }
 
 }
+
+export const readShoes = async (req: Request , res: Response) =>
+{
+    try
+    {
+        const shoes = await prisma.calcado.findMany();
+
+        if (!shoes){
+            return res.status(404).json({
+                Message: "Não há calçados registrados"
+            })
+        }
+
+        return res.status(200).json(shoes)
+    }
+    catch
+    {
+        return res.status(400).json({
+            Message: "nenhum calçado cadastrado"
+        })
+    }
+}
