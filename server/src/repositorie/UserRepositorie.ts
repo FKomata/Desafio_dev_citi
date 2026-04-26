@@ -10,3 +10,14 @@ export const tamanhosCalcados = async(tamanhoDesejado: number) =>
         return calcados
 }
  
+export const marcasCalcados = async(marcaDesjada: string) =>
+{
+        const calcados = await prisma.calcado.findMany({
+        where:{
+                marca : marcaDesjada
+            } 
+        });
+        return calcados
+
+}
+
