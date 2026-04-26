@@ -1,7 +1,8 @@
-import { Request, Response } from "express";
+import { Request, response, Response } from "express";
 import prisma from "@database";
 import Message from "src/global/Message";
 import { error } from "console";
+import { tamanhosCalcados } from "src/repositorie/UserRepositorie";
 
 export const createShoes = async (req: Request, res: Response) =>
 {
@@ -101,7 +102,6 @@ export const deleteShoes = async(req: Request , res: Response) =>
     try
     {
         const { id } = req.params;
-        const{nome_produto,cor,marca,tamanho,preco,quantidade_em_estoque} = req.body;
 
         const calcadoDeletado = await prisma.calcado.delete({
             where:
@@ -124,5 +124,32 @@ export const deleteShoes = async(req: Request , res: Response) =>
     }
 
     
+}
+
+export const searchShoes = async(req:Request , res: Response) => 
+    {
+    try 
+    {
+        const{ tamanho } = req.params   
+
+        const tamanhoNumeor = Number(tamanho)
+
+        const calcadosEncontrados = await tamanhosCalcados(tamanhoNumeor) 
+
+        if(calcadosEncontrados.length == 0){
+            return res.status(404)
+        }
+
+        return res.status(200).json(calcadosEncontrados)
+    }
+    catch(error)
+    {
+        return res.status(500).json({
+            message: "erro interno ao procurar calçados ",
+            error
+        })
+    }
+
+
 }
 
