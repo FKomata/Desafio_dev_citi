@@ -1,6 +1,6 @@
 import express from "express";
 import {  readAllUsers } from "./controllers/UserController";
-import { createShoes, deleteShoes, readAllShoes, searchMarcaShoes, searchShoes, updateShoes } from "./controllers/CalcadosController";
+import { createShoes, deleteShoes, readAllShoes, searchMarcaShoes, searchShoes, totalPares, updateShoes } from "./controllers/CalcadosController";
 
 
 const routes = express.Router();
@@ -19,5 +19,8 @@ routes.delete("/shoes/:id", deleteShoes);
 routes.get("/shoes/:tamanho", searchShoes);
 
 routes.get("/shoes/marca/:marca", searchMarcaShoes);
+
+routes.get("/shoes/estoque/quantidade", totalPares);
+
 
 

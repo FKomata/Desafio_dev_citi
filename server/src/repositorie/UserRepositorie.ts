@@ -21,3 +21,16 @@ export const marcasCalcados = async(marcaDesjada: string) =>
 
 }
 
+
+export const quantidadePares = async () => 
+{
+    const quantidadePares = await prisma.calcado.findMany();
+    
+    let qTotal = 0
+
+    for(let calcado of quantidadePares){
+        qTotal += calcado.quantidade_em_estoque;
+    }
+
+    return qTotal;
+}

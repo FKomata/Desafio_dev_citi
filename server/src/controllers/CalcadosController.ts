@@ -2,7 +2,7 @@ import { Request, response, Response } from "express";
 import prisma from "@database";
 import Message from "src/global/Message";
 import { error } from "console";
-import { marcasCalcados, tamanhosCalcados } from "src/repositorie/UserRepositorie";
+import { marcasCalcados, quantidadePares, tamanhosCalcados } from "src/repositorie/UserRepositorie";
 
 export const createShoes = async (req: Request, res: Response) =>
 {
@@ -176,4 +176,30 @@ export const searchMarcaShoes = async(req:Request , res: Response) =>
     }
 
 
+}
+
+export const totalPares = async(req:Request, res:Response) =>
+{
+    try
+    {
+
+        const calcados = await quantidadePares()
+    
+        if(calcados == 0){
+            return res.status(200).json({
+                Message:"sem calçados disponiveis"
+            })
+        }
+    
+        return res.status(200).json({
+            Message: "quantidade de calçados: ", calcados
+        })
+    }
+    catch(error)
+    {
+        return res.status(500).json({
+            message: "erro interno ao procurar calçados ",
+            error
+        })
+    }
 }
