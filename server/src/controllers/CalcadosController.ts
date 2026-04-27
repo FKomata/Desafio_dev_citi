@@ -137,7 +137,9 @@ export const searchShoes = async(req:Request , res: Response) =>
         const calcadosEncontrados = await tamanhosCalcados(tamanhoNumeor) 
 
         if(calcadosEncontrados.length == 0){
-            return res.status(404)
+            return res.status(404).json({
+                Message: "nenhum calçado encontrado"
+            })
         }
 
         return res.status(200).json(calcadosEncontrados)
