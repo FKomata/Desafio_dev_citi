@@ -12,7 +12,7 @@ routes.get("/shoes", readAllShoes);
 routes.put("/shoes/:id", updateShoes);
 routes.delete("/shoes/:id", deleteShoes);
 
-routes.get("/shoes/tamanho/:tamanho", searchShoes);
+routes.get("/shoes/:tamanho", searchShoes);
 routes.get("/shoes/marca/:marca", searchMarcaShoes);
 routes.get("/shoes/estoque/quantidade", totalPares);
 
